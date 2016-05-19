@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+  	<bean id="dealSynJob"  class="com.otcollection.ossupload.DealSynJob" >
+  	    <property name="ossSVC" ref="ossSVC" />
+  	    <property name="fileSVC" ref="fileSVC" />
+  	    <property name="conf" ref="configure" />
+ 	</bean>
+ 	
+ 	<bean id="ossSVC"  class="com.otcollection.ossupload.OSSOperation" >
+ 	      <property name="conf" ref="configure" />
+ 	      <property name="fileSVC" ref="fileSVC" />
+ 	</bean>
+ 	
+ 	<bean id="configure"  class="com.otcollection.ossupload.OSSConfigure" >
+ 	    <constructor-arg  value="conf.properties"/>
+ 	</bean>
+ 	
+ 	<bean id="fileSVC"  class="com.otcollection.ossupload.FileOperation" >
+ 	    <property name="conf" ref="configure" />
+ 	</bean>
+ 	
+
+
+ 	<!-- 若实现接口，请配置实现 -->
+ 	<!-- <bean id="updateUrlSVC"  class="com.otcollection.ossupload.updateUrlSVCImpl" >
+ 	</bean> -->
+
+	<!-- 监控数据同步任务  -->
+
+	<bean id="monitorDataSynTrigger"  class="org.springframework.scheduling.quartz.CronTriggerBean">  
+       <property name="jobDetail">  
+	        <bean class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+		        <property name="targetObject" ref="dealSynJob" />
+		        <property name="targetMethod" value="doJob" />  
+		        <property name="concurrent" value="false" />
+		    </bean>
+        </property> 
+        <!-- quartz的时间设置 每天 凌晨 1,3,5 点钟运行 -->
+        <property name="cronExpression" value="0 0 1,3,5 * * ?" />
+	</bean>
+	
+	<bean name="quartz" autowire="no" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+			    <ref bean="monitorDataSynTrigger"/>
+			</list>
+		</property>
+	</bean>
+</beans>
