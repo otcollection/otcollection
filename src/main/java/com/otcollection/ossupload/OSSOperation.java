@@ -29,6 +29,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 
+import com.aliyun.oss.ClientConfiguration;
 import com.aliyun.oss.ClientException;
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.OSSException;
@@ -209,7 +210,12 @@ public class OSSOperation {
 		String endpoint = conf.getEndpoint();
 		String accessKeyId = conf.getAccessKeyId();
 		String accessKeySecret = conf.getAccessKeySecret();
-		OSSClient client = new OSSClient(endpoint, accessKeyId, accessKeySecret);
+		OSSClient client = null;
+		if ("pub".equals(conf.getMode())) {
+			client = new OSSClient(endpoint, accessKeyId, accessKeySecret);
+		} else {
+			client = new OSSClient(endpoint, accessKeyId, accessKeySecret,new ClientConfiguration().setSupportCname(false));
+		}
 		return client;
 	}
 	

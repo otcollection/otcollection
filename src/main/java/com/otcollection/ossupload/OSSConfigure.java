@@ -19,6 +19,7 @@ public class OSSConfigure {
     private String regex;
     private String lockFile;
     private String safeTimeLength;
+    private String mode;
   
     public OSSConfigure() {  
   
@@ -49,17 +50,18 @@ public class OSSConfigure {
         path = prop.getProperty("path").trim();  
         timeLength = prop.getProperty("timeLength").trim();
         ossUrlFileName = prop.getProperty("ossUrlFileName").trim();
-        service = prop.getProperty("service".trim());
-        updateUrlSVCImpl = prop.getProperty("updateUrlSVCImpl".trim());
-        regex = prop.getProperty("regex".trim());
-        lockFile = prop.getProperty("lockFile".trim());
-        safeTimeLength = prop.getProperty("safeTimeLength".trim());
-        
+        service = prop.getProperty("service").trim();
+        updateUrlSVCImpl = prop.getProperty("updateUrlSVCImpl").trim();
+        regex = prop.getProperty("regex").trim();
+        lockFile = prop.getProperty("lockFile").trim();
+        safeTimeLength = prop.getProperty("safeTimeLength").trim();
+        mode = prop.getProperty("mode").trim();
+
     }  
   
     public OSSConfigure(String endpoint, String accessKeyId,  
             String accessKeySecret, String bucketName, String path, String timeLength, 
-            String ossUrlFileName,String service,String updateUrlSVCImpl,String regex,String lockFile) {  
+            String ossUrlFileName,String service,String updateUrlSVCImpl,String regex,String lockFile,String mode) {  
   
         this.endpoint = endpoint;  
         this.accessKeyId = accessKeyId;  
@@ -72,7 +74,9 @@ public class OSSConfigure {
         this.updateUrlSVCImpl = updateUrlSVCImpl;
         this.regex = regex;
         this.lockFile = lockFile;
+        this.mode = mode;
     }  
+
   
     public String getEndpoint() {  
         return endpoint;  
@@ -170,6 +174,14 @@ public class OSSConfigure {
 
 	public void setSafeTimeLength(String safeTimeLength) {
 		this.safeTimeLength = safeTimeLength;
+	}
+
+	public String getMode() {
+		return mode;
+	}
+
+	public void setMode(String mode) {
+		this.mode = mode;
 	}  
   
 	
