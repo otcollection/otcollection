@@ -56,3 +56,7 @@ service=http://xxxxx/updateUrl?oldurl={fileName}&newurl={ossUrl}<br>
 <br>
 <strong>选填项，如果额外实现了接口UpdateUrlSVC，请填写实现函数名，将会优先调用该实现方法，未实现则无需填写</strong><br>
 updateUrlSVCImpl=<br>
+<br>
+
+<strong>必填项，mode=pub 表示公有云 ，pub=private 表示私有云</strong><br>
+mode=pub<br>
