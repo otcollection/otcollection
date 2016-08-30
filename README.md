@@ -58,5 +58,5 @@ service=http://xxxxx/updateUrl?oldurl={fileName}&newurl={ossUrl}<br>
 updateUrlSVCImpl=<br>
 <br>
 
-<strong>必填项，mode=pub 表示公有云 ，pub=private 表示私有云</strong><br>
+<strong>必填项，mode=pub 表示公有云 ，mode=private 表示私有云</strong><br>
 mode=pub<br>
